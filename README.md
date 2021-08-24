@@ -43,7 +43,7 @@ Para rodar os pipelines do Kedro, execute:
 kedro run
 ```
 
-Isso fará com que todo o pipeline seja executado. Serão criados dinamicamente todos os arquivos e diretórios intermediários, o único arquivo que é necessário de início é o arquivo .zip inicial, encontrado em data/stage/EINSTEINAgosto.zip
+Isso fará com que todo o pipeline seja executado. Serão criados dinamicamente todos os arquivos e diretórios intermediários. O único arquivo que é necessário de início é o arquivo .zip inicial, encontrado em data/stage/EINSTEINAgosto.zip
 
 Ao ser executado, o pipeline de dados irá gerar tudo que é pedido nas questões 1, 2 e 3.
 
