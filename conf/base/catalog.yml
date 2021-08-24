@@ -1,0 +1,95 @@
+# Here you can define all your data sets by using simple YAML syntax.
+#
+# Documentation for this file format can be found in "The Data Catalog"
+# Link: https://kedro.readthedocs.io/en/stable/05_data/01_data_catalog.html
+#
+# We support interacting with a variety of data stores including local file systems, cloud, network and HDFS
+#
+# The Data Catalog supports being able to reference the same file using two different DataSet implementations
+# (transcoding), templating and a way to reuse arguments that are frequently repeated. See more here:
+# https://kedro.readthedocs.io/en/stable/05_data/01_data_catalog.html
+#
+
+stage_exames:
+  type: spark.SparkDataSet
+  filepath: data/stage/exames/agosto/EINSTEIN_Exames_2.csv
+  file_format: csv
+  load_args:
+    sep: "|"
+    header: true
+    inferSchema: true
+
+stage_pacientes:
+  type: spark.SparkDataSet
+  filepath: data/stage/pacientes/agosto/EINSTEIN_Pacientes_2.csv
+  file_format: csv
+  load_args:
+    sep: "|"
+    header: true
+    inferSchema: true
+
+
+raw_pacientes:
+  type: spark.SparkDataSet
+  filepath: data/raw/pacientes/agosto/
+  file_format: parquet
+  save_args:
+    mode: overwrite
+
+raw_exames:
+  type: spark.SparkDataSet
+  filepath: data/raw/exames/agosto/
+  file_format: parquet
+  save_args:
+    mode: overwrite
+
+
+curated_pacientes_hot:
+  type: spark.SparkDataSet
+  filepath: data/curated/pacientes/agosto/hot/
+  file_format: parquet
+  save_args:
+    mode: overwrite
+
+curated_pacientes_rejected:
+  type: spark.SparkDataSet
+  filepath: data/curated/pacientes/agosto/rejected/
+  file_format: parquet
+  save_args:
+    mode: overwrite
+
+curated_exames_hot:
+  type: spark.SparkDataSet
+  filepath: data/curated/exames/agosto/hot/
+  file_format: parquet
+  save_args:
+    mode: overwrite
+
+curated_exames_rejected:
+  type: spark.SparkDataSet
+  filepath: data/curated/exames/agosto/rejected/
+  file_format: parquet
+  save_args:
+    mode: overwrite
+
+
+exames_por_paciente:
+  type: spark.SparkDataSet
+  filepath: data/service/exames_por_paciente/agosto/
+  file_format: parquet
+  save_args:
+    mode: overwrite
+    partitionBy:
+      - "CD_PAIS"
+      - "CD_UF"
+
+exames_por_paciente_sp@spark:
+  type: spark.SparkDataSet
+  filepath: data/service/exames_por_paciente_sp/agosto/
+  file_format: parquet
+  save_args:
+    mode: overwrite
+
+exames_por_paciente_sp@pandas:
+  type: pandas.ParquetDataSet
+  filepath: data/service/exames_por_paciente_sp/agosto/
