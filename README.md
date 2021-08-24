@@ -2,122 +2,87 @@
 
 ## Overview
 
-This is your new Kedro project with some initial Spark configuration and an example pipeline, generated using `Kedro 0.17.4`.
+Este repositório foi criado com o propósito de armazenar o código fonte para as minhas soluções para o Teste para seleção de Engenheiro de Dados do Hospital Albert Einstein
 
-This project assumes that a Spark cluster is accessible. Please refer to [Spark documentation](https://spark.apache.org/docs/latest/spark-standalone.html) on how to set one up locally.
+O código foi todo construído usando o [Kedro](https://github.com/quantumblacklabs/kedro), um framework open-source em Python que permite a criação de projetos de dados de maneira muito fácil e que trás inúmeros benefícios. A [documentação](https://kedro.readthedocs.io) é bastante completa e explica detalhadamente as vantagens em usar o Kedro.
 
-Take a look at the [Kedro documentation](https://kedro.readthedocs.io) to get started.
 
-## Rules and guidelines
+## Instruções
 
-In order to get the best out of the template:
+É altamente recomendado que você utilize um ambiente virtual.
 
-* Don't remove any lines from the `.gitignore` file we provide
-* Make sure your results can be reproduced by following a [data engineering convention](https://kedro.readthedocs.io/en/stable/12_faq/01_faq.html#what-is-data-engineering-convention)
-* Don't commit data to your repository
-* Don't commit any credentials or your local configuration to your repository. Keep all your credentials and local configuration in `conf/local/`
-
-## How to install dependencies
-
-Declare any dependencies in `src/requirements.txt` for `pip` installation and `src/environment.yml` for `conda` installation.
-
-To install them, run:
-
+Para criar um, execute:
 ```
-kedro install
+python3 -m venv env
+```
+Para ativá-lo, execute:
+```
+source env/bin/activate
 ```
 
-## How to run Kedro
+Para instalar todas as dependências do projeto, vá ao diretório raiz do repositório e execute:
 
-You can run your Kedro project with:
+```
+pip install -r src/requirements.txt
+```
+
+Para se certificar de que o Kedro está funcionando corretamente, execute:
+
+```
+kedro info
+```
+
+ATENÇÃO: é presumido que o Spark e todas as suas dependências estejam instalados no seu ambiente para que esse projeto funcione corretamente.
+
+
+## Como rodar o seu pipeline Kedro
+
+Para rodar os pipelines do Kedro, execute:
 
 ```
 kedro run
 ```
 
-## How to test your Kedro project
+Isso fará com que todo o pipeline seja executado. Serão criados dinamicamente todos os arquivos e diretórios intermediários, o único arquivo que é necessário de início é o arquivo .zip inicial, encontrado em data/stage/EINSTEINAgosto.zip
 
-Have a look at the file `src/tests/test_run.py` for instructions on how to write your tests. You can run your tests as follows:
+Ao ser executado, o pipeline de dados irá gerar tudo que é pedido nas questões 1, 2 e 3.
 
-```
-kedro test
-```
+Para resolver a questão 4, eu usei um notebook jupyter. Notebooks (encontrados na pasta notebooks) são as únicas exceções num projeto Kedro, no sentido de que não tem dependência com o resto do projeto, não são executados quando o comando 'kedro run' é iniciado. Eles servem justamente para isso, para ser um local de experimentos, uma espécie de sandbox.
 
-To configure the coverage threshold, look at the `.coveragerc` file.
+## Como trabalhar com notebooks no kedro
 
-
-## Project dependencies
-
-To generate or update the dependency requirements for your project:
-
-```
-kedro build-reqs
-```
-
-This will copy the contents of `src/requirements.txt` into a new file `src/requirements.in` which will be used as the source for `pip-compile`. You can see the output of the resolution by opening `src/requirements.txt`.
-
-After this, if you'd like to update your project requirements, please update `src/requirements.in` and re-run `kedro build-reqs`.
-
-[Further information about project dependencies](https://kedro.readthedocs.io/en/stable/04_kedro_project_setup/01_dependencies.html#project-specific-dependencies)
-
-## How to work with Kedro and notebooks
-
-> Note: Using `kedro jupyter` or `kedro ipython` to run your notebook provides these variables in scope: `context`, `catalog`, and `startup_error`.
+> Nota: Usar `kedro jupyter` ou `kedro ipython` para rodar seu notebook te dá as seguintes variáveis: `context`, `catalog`, and `startup_error`. Assim é possível acessar ao data catalog ou aos nós dos pipelines de dentro do seu notebook.
 
 ### Jupyter
-To use Jupyter notebooks in your Kedro project, you need to install Jupyter:
+Para utilizar notebooks Jupyter, é necessário instalar o Jupyter:
 
 ```
 pip install jupyter
 ```
 
-After installing Jupyter, you can start a local notebook server:
+Depois de instaldo, você pode iniciar um notebook server:
 
 ```
 kedro jupyter notebook
 ```
 
 ### JupyterLab
-To use JupyterLab, you need to install it:
+Para utilizar o JupyterLab, você precisa instalá-lo:
 
 ```
 pip install jupyterlab
 ```
 
-You can also start JupyterLab:
+Iniciando o JupyterLab:
 
 ```
 kedro jupyter lab
 ```
 
 ### IPython
-And if you want to run an IPython session:
+E se você quiser uma sessão IPython:
 
 ```
 kedro ipython
 ```
 
-### How to convert notebook cells to nodes in a Kedro project
-You can move notebook code over into a Kedro project structure using a mixture of [cell tagging](https://jupyter-notebook.readthedocs.io/en/stable/changelog.html#cell-tags) and Kedro CLI commands.
-
-By adding the `node` tag to a cell and running the command below, the cell's source code will be copied over to a Python file within `src/<package_name>/nodes/`:
-
-```
-kedro jupyter convert <filepath_to_my_notebook>
-```
-> *Note:* The name of the Python file matches the name of the original notebook.
-
-Alternatively, you may want to transform all your notebooks in one go. Run the following command to convert all notebook files found in the project root directory and under any of its sub-folders:
-
-```
-kedro jupyter convert --all
-```
-
-### How to ignore notebook output cells in `git`
-To automatically strip out all output cell contents before committing to `git`, you can run `kedro activate-nbstripout`. This will add a hook in `.git/config` which will run `nbstripout` before anything is committed to `git`.
-
-> *Note:* Your output cells will be retained locally.
-
-## Package your Kedro project
-
-[Further information about building project documentation and packaging your project](https://kedro.readthedocs.io/en/stable/03_tutorial/05_package_a_project.html)
